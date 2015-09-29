@@ -14,11 +14,15 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    game.cpp
+    game.cpp \
+    controller.cpp \
+    view.cpp \
+    clickablelabel.cpp
 
 HEADERS  += mainwindow.h \
     view.h \
     controller.h \
-    game.h
+    game.h \
+    clickablelabel.h
 
 FORMS    += mainwindow.ui

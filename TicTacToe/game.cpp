@@ -4,7 +4,7 @@
 // Contructor
 // input : controller contr
 // Sets the contr variable to contr and sets other values to default
-Game::Game(Controller contr): contr(contr), xturn(true), movesLeft(9) {
+Game::Game(Controller * contr): contr(contr), xturn(true), movesLeft(9) {
     for (int i = 0; i < 3 ; i++) {
         for (int j = 0 ; j < 3 ; j++) {
             board[i][j] = 0;
@@ -37,6 +37,9 @@ int Game::mark(int h, int w){
     // Make the move
     board[h][w] = (xturn ? 1 : 2);
 
+    // Notify the controller that you made the move
+    contr->emitnotify(board[h][w], h, w);
+
     // reset the xturn variable and decrease moves left
     xturn = !xturn;
     movesLeft--;
@@ -45,18 +48,18 @@ int Game::mark(int h, int w){
     // 1. Check if horizontal or vertical win
 
     // vhS is a switch between vertical and horizontal
-    for (int whS = 0 ; vhS < 2 ; vhS++) {
+    for (int whS = 0 ; whS < 2 ; whS++) {
         // Recurse through all three vertical or horizontal possibilities
         for (int c = 0; c < 3; c++) {
 
             // The starting coordinate for the respective leading square
-            int hVal = c*(1 - vhS);
-            int wVal = c*vhS;
+            int hVal = c*(1 - whS);
+            int wVal = c*whS;
 
             // The increments to add to the starting coordinates (note: if starting coords are vertical first, then we add horizontal
             //  and vice-versa)
-            int wInc = 1 - vhS;
-            int hInc = vhS;
+            int wInc = 1 - whS;
+            int hInc = whS;
 
             // Check which type to compare to
             int cto = (xturn ? 1 : 2);
@@ -81,8 +84,8 @@ int Game::mark(int h, int w){
 
     for (int bS = 0; bS < 2 ; bS++) {
 
-        int tInc = (bs == 0 ? -1 : 1);
-        int bInc = (bs == 0 ? 1 : -1);
+        int tInc = (bS == 0 ? -1 : 1);
+        int bInc = (bS == 0 ? 1 : -1);
 
         // Check which type to compare to
         int cto = (xturn ? 1 : 2);
@@ -110,9 +113,19 @@ int Game::mark(int h, int w){
 // clearboard()
 // resets the board state to a new game state
 void Game::clearboard() {
+
+    // Reset x goes first
+    xturn = true;
+
+    // Loop through all coordinates
     for (int i = 0; i < 3 ; i++) {
         for (int j = 0 ; j < 3 ; j++) {
+
+            // Set the coord loc to default
             board[i][j] = 0;
+
+            // Notify the view of change
+            contr->notify(0, i, j);
         }
     }
 }
@@ -120,6 +133,6 @@ void Game::clearboard() {
 // xturn()
 // output : bool
 // returns true if it is x's turn and false otherwise
-bool Game::xturn() {
+bool Game::getxturn() {
     return xturn;
 }

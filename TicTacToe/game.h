@@ -9,7 +9,7 @@ class Game {
     int board[3][3];
 
     // The controller
-    Controller contr;
+    Controller * contr;
 
     // Bool value to keep track of turns
     bool xturn;
@@ -20,7 +20,7 @@ class Game {
 public:
 
     // Constructor/Destructor
-    Game(Controller contr);
+    Game(Controller * contr);
     ~Game();
 
     // Mark the board at h and w with either o or x depending on xturn
@@ -30,7 +30,7 @@ public:
     void clearboard();
 
     // Get the turn
-    bool xturn();
+    bool getxturn();
 
 };
 

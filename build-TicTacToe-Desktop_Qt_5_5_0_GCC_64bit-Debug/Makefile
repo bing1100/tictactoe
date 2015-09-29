@@ -49,10 +49,22 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../TicTacToe/main.cpp \
-		../TicTacToe/mainwindow.cpp moc_mainwindow.cpp
+		../TicTacToe/mainwindow.cpp \
+		../TicTacToe/game.cpp \
+		../TicTacToe/controller.cpp \
+		../TicTacToe/view.cpp \
+		../TicTacToe/clickablelabel.cpp moc_mainwindow.cpp \
+		moc_controller.cpp \
+		moc_clickablelabel.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
-		moc_mainwindow.o
+		game.o \
+		controller.o \
+		view.o \
+		clickablelabel.o \
+		moc_mainwindow.o \
+		moc_controller.o \
+		moc_clickablelabel.o
 DIST          = /home/bhux/Qt/5.5/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/bhux/Qt/5.5/gcc_64/mkspecs/common/unix.conf \
 		/home/bhux/Qt/5.5/gcc_64/mkspecs/common/linux.conf \
@@ -183,8 +195,16 @@ DIST          = /home/bhux/Qt/5.5/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/bhux/Qt/5.5/gcc_64/mkspecs/features/exceptions.prf \
 		/home/bhux/Qt/5.5/gcc_64/mkspecs/features/yacc.prf \
 		/home/bhux/Qt/5.5/gcc_64/mkspecs/features/lex.prf \
-		../TicTacToe/TicTacToe.pro ../TicTacToe/mainwindow.h ../TicTacToe/main.cpp \
-		../TicTacToe/mainwindow.cpp
+		../TicTacToe/TicTacToe.pro ../TicTacToe/mainwindow.h \
+		../TicTacToe/view.h \
+		../TicTacToe/controller.h \
+		../TicTacToe/game.h \
+		../TicTacToe/clickablelabel.h ../TicTacToe/main.cpp \
+		../TicTacToe/mainwindow.cpp \
+		../TicTacToe/game.cpp \
+		../TicTacToe/controller.cpp \
+		../TicTacToe/view.cpp \
+		../TicTacToe/clickablelabel.cpp
 QMAKE_TARGET  = TicTacToe
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = TicTacToe
@@ -498,8 +518,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../TicTacToe/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../TicTacToe/main.cpp ../TicTacToe/mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../TicTacToe/mainwindow.h ../TicTacToe/view.h ../TicTacToe/controller.h ../TicTacToe/game.h ../TicTacToe/clickablelabel.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../TicTacToe/main.cpp ../TicTacToe/mainwindow.cpp ../TicTacToe/game.cpp ../TicTacToe/controller.cpp ../TicTacToe/view.cpp ../TicTacToe/clickablelabel.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../TicTacToe/mainwindow.ui $(DISTDIR)/
 
 
@@ -523,9 +543,9 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_controller.cpp moc_clickablelabel.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_controller.cpp moc_clickablelabel.cpp
 moc_mainwindow.cpp: /home/bhux/Qt/5.5/gcc_64/include/QtWidgets/QMainWindow \
 		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qmainwindow.h \
 		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qwidget.h \
@@ -633,6 +653,65 @@ moc_mainwindow.cpp: /home/bhux/Qt/5.5/gcc_64/include/QtWidgets/QMainWindow \
 		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qicon.h \
 		../TicTacToe/mainwindow.h
 	/home/bhux/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/home/bhux/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/bhux/Documents/projects/QtProjects/tictactoe/TicTacToe -I/home/bhux/Qt/5.5/gcc_64/include -I/home/bhux/Qt/5.5/gcc_64/include/QtWidgets -I/home/bhux/Qt/5.5/gcc_64/include/QtGui -I/home/bhux/Qt/5.5/gcc_64/include/QtCore -I. ../TicTacToe/mainwindow.h -o moc_mainwindow.cpp
+
+moc_controller.cpp: /home/bhux/Qt/5.5/gcc_64/include/QtCore/QObject \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qobject.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qstring.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qchar.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qlist.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		../TicTacToe/controller.h
+	/home/bhux/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/home/bhux/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/bhux/Documents/projects/QtProjects/tictactoe/TicTacToe -I/home/bhux/Qt/5.5/gcc_64/include -I/home/bhux/Qt/5.5/gcc_64/include/QtWidgets -I/home/bhux/Qt/5.5/gcc_64/include/QtGui -I/home/bhux/Qt/5.5/gcc_64/include/QtCore -I. ../TicTacToe/controller.h -o moc_controller.cpp
+
+moc_clickablelabel.cpp: ../TicTacToe/clickablelabel.h
+	/home/bhux/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/home/bhux/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/bhux/Documents/projects/QtProjects/tictactoe/TicTacToe -I/home/bhux/Qt/5.5/gcc_64/include -I/home/bhux/Qt/5.5/gcc_64/include/QtWidgets -I/home/bhux/Qt/5.5/gcc_64/include/QtGui -I/home/bhux/Qt/5.5/gcc_64/include/QtCore -I. ../TicTacToe/clickablelabel.h -o moc_clickablelabel.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -873,11 +952,231 @@ mainwindow.o: ../TicTacToe/mainwindow.cpp ../TicTacToe/mainwindow.h \
 		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qtouchdevice.h \
 		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qtabwidget.h \
 		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qicon.h \
-		ui_mainwindow.h
+		ui_mainwindow.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/QVariant \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/QAction \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qaction.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qactiongroup.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/QApplication \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qapplication.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qcoreapplication.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qeventloop.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qguiapplication.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qinputmethod.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/QButtonGroup \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qbuttongroup.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/QHeaderView \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qheaderview.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qabstractitemview.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qframe.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qabstractitemmodel.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qitemselectionmodel.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qstyleoption.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qvalidator.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qregularexpression.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qslider.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qabstractslider.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qstyle.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qtabbar.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qrubberband.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/QMenuBar \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qmenubar.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qmenu.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/QStatusBar \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qstatusbar.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/QToolBar \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qtoolbar.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/QWidget \
+		../TicTacToe/clickablelabel.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../TicTacToe/mainwindow.cpp
+
+game.o: ../TicTacToe/game.cpp ../TicTacToe/game.h \
+		../TicTacToe/controller.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/QObject \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qobject.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qstring.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qchar.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qlist.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qobject_impl.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o game.o ../TicTacToe/game.cpp
+
+controller.o: ../TicTacToe/controller.cpp ../TicTacToe/game.h \
+		../TicTacToe/controller.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/QObject \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qobject.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qstring.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qchar.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qlist.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		../TicTacToe/view.h \
+		../TicTacToe/mainwindow.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/QMainWindow \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qmainwindow.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qwidget.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qmargins.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qrect.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qsize.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qpoint.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qpalette.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qcolor.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qrgb.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qbrush.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qpair.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qvector.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qmatrix.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qpolygon.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qregion.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qdatastream.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qiodevice.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qline.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qtransform.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qpainterpath.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qimage.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qpixelformat.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qpixmap.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qshareddata.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qhash.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qfont.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qfontmetrics.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qfontinfo.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qcursor.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qkeysequence.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qevent.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qvariant.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qmap.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qdebug.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qtextstream.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qlocale.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qset.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qurl.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qurlquery.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qfile.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtCore/qfiledevice.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qvector2d.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qtouchdevice.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtWidgets/qtabwidget.h \
+		/home/bhux/Qt/5.5/gcc_64/include/QtGui/qicon.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o controller.o ../TicTacToe/controller.cpp
+
+view.o: ../TicTacToe/view.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o view.o ../TicTacToe/view.cpp
+
+clickablelabel.o: ../TicTacToe/clickablelabel.cpp ../TicTacToe/clickablelabel.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o clickablelabel.o ../TicTacToe/clickablelabel.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
+
+moc_controller.o: moc_controller.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_controller.o moc_controller.cpp
+
+moc_clickablelabel.o: moc_clickablelabel.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_clickablelabel.o moc_clickablelabel.cpp
 
 ####### Install
 

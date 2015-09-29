@@ -15,6 +15,7 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
@@ -22,46 +23,53 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_MainWindow
+class Ui_TicTacToe
 {
 public:
-    QMenuBar *menuBar;
-    QToolBar *mainToolBar;
     QWidget *centralWidget;
+    QMenuBar *menuBar;
+    QMenu *menuTicTacToe;
+    QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
-    void setupUi(QMainWindow *MainWindow)
+    void setupUi(QMainWindow *TicTacToe)
     {
-        if (MainWindow->objectName().isEmpty())
-            MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(400, 300);
-        menuBar = new QMenuBar(MainWindow);
-        menuBar->setObjectName(QStringLiteral("menuBar"));
-        MainWindow->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(MainWindow);
-        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
-        MainWindow->addToolBar(mainToolBar);
-        centralWidget = new QWidget(MainWindow);
+        if (TicTacToe->objectName().isEmpty())
+            TicTacToe->setObjectName(QStringLiteral("TicTacToe"));
+        TicTacToe->resize(400, 300);
+        centralWidget = new QWidget(TicTacToe);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        MainWindow->setCentralWidget(centralWidget);
-        statusBar = new QStatusBar(MainWindow);
+        TicTacToe->setCentralWidget(centralWidget);
+        menuBar = new QMenuBar(TicTacToe);
+        menuBar->setObjectName(QStringLiteral("menuBar"));
+        menuBar->setGeometry(QRect(0, 0, 400, 27));
+        menuTicTacToe = new QMenu(menuBar);
+        menuTicTacToe->setObjectName(QStringLiteral("menuTicTacToe"));
+        TicTacToe->setMenuBar(menuBar);
+        mainToolBar = new QToolBar(TicTacToe);
+        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
+        TicTacToe->addToolBar(Qt::TopToolBarArea, mainToolBar);
+        statusBar = new QStatusBar(TicTacToe);
         statusBar->setObjectName(QStringLiteral("statusBar"));
-        MainWindow->setStatusBar(statusBar);
+        TicTacToe->setStatusBar(statusBar);
 
-        retranslateUi(MainWindow);
+        menuBar->addAction(menuTicTacToe->menuAction());
 
-        QMetaObject::connectSlotsByName(MainWindow);
+        retranslateUi(TicTacToe);
+
+        QMetaObject::connectSlotsByName(TicTacToe);
     } // setupUi
 
-    void retranslateUi(QMainWindow *MainWindow)
+    void retranslateUi(QMainWindow *TicTacToe)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
+        TicTacToe->setWindowTitle(QApplication::translate("TicTacToe", "MainWindow", 0));
+        menuTicTacToe->setTitle(QApplication::translate("TicTacToe", "TicTacToe", 0));
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class MainWindow: public Ui_MainWindow {};
+    class TicTacToe: public Ui_TicTacToe {};
 } // namespace Ui
 
 QT_END_NAMESPACE
