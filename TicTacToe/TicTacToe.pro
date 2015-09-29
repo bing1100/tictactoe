@@ -13,7 +13,8 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    game.cpp
 
 HEADERS  += mainwindow.h \
     view.h \
