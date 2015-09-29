@@ -41,7 +41,6 @@ int Game::mark(int h, int w){
     contr->emitnotify(board[h][w], h, w);
 
     // reset the xturn variable and decrease moves left
-    xturn = !xturn;
     movesLeft--;
 
     // Check the resulting board state
@@ -105,6 +104,8 @@ int Game::mark(int h, int w){
         }
     }
 
+    xturn = !xturn;
+
     // returns either 0 or 3 depending on if there are moves left
     return (movesLeft == 0 ? 3 : 0);
 
@@ -117,6 +118,9 @@ void Game::clearboard() {
     // Reset x goes first
     xturn = true;
 
+    // Reset move counter
+    movesLeft = 9;
+
     // Loop through all coordinates
     for (int i = 0; i < 3 ; i++) {
         for (int j = 0 ; j < 3 ; j++) {
@@ -125,7 +129,7 @@ void Game::clearboard() {
             board[i][j] = 0;
 
             // Notify the view of change
-            contr->notify(0, i, j);
+            contr->emitnotify(0, i, j);
         }
     }
 }
