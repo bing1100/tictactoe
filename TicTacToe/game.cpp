@@ -40,9 +40,6 @@ int Game::mark(int h, int w){
     // Notify the controller that you made the move
     contr->emitnotify(board[h][w], h, w);
 
-    // reset the xturn variable and decrease moves left
-    movesLeft--;
-
     // Check the resulting board state
     // 1. Check if horizontal or vertical win
 
@@ -104,6 +101,9 @@ int Game::mark(int h, int w){
         }
     }
 
+    // reset the xturn variable and decrease moves left
+    //  note: we do this after we check the board to ensure we check the right color
+    movesLeft--;
     xturn = !xturn;
 
     // returns either 0 or 3 depending on if there are moves left

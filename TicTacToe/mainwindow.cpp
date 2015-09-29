@@ -3,11 +3,33 @@
 #include "clickablelabel.h"
 #include "controller.h"
 #include <QtCore/QCoreApplication>
+#include <QGraphicsScene>
 
 // Constructor
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
+    // Create the 3 by 3 drawn frame
+    QFrame *htline = new QFrame(this);
+    htline->setObjectName(QString::fromUtf8("line"));
+    htline->setGeometry(QRect(25, 75, 150, 5));
+    htline->setFrameShape(QFrame::HLine);
+
+    QFrame *hbline = new QFrame(this);
+    hbline->setObjectName(QString::fromUtf8("line"));
+    hbline->setGeometry(QRect(25, 125, 150, 5));
+    hbline->setFrameShape(QFrame::HLine);
+
+    QFrame *vrline = new QFrame(this);
+    vrline->setObjectName(QString::fromUtf8("line"));
+    vrline->setGeometry(QRect(75, 25, 5, 150));
+    vrline->setFrameShape(QFrame::VLine);
+
+    QFrame *vlline = new QFrame(this);
+    vlline->setObjectName(QString::fromUtf8("line"));
+    vlline->setGeometry(QRect(125, 25, 5, 150));
+    vlline->setFrameShape(QFrame::VLine);
+
     // Create a new controller object
     contr = new Controller(this);
 
@@ -27,77 +49,33 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     // Create all clickablelabels, set the geometry, and set the correct connect
-    clabel_00 = new ClickableLabel(" ", this, 0, 0);
-    clabel_00 -> setGeometry(QRect(QPoint(26, 26), QSize(48, 48)));
-    clabel_00 -> setAlignment(Qt::AlignCenter);
-    QObject::connect(contr    , SIGNAL(notify(const QString&, int, int))
-                    ,clabel_00, SLOT(setval(const QString&, int, int)));
-    QObject::connect(clabel_00, SIGNAL(clicked(int, int, int))
-                    ,contr    , SLOT(catchclick(int, int, int)));
+    clabel_00 = new ClickableLabel(" ", this, 0, 0, contr);
+    clabel_00 -> setGeometry(QRect(QPoint(25, 25), QSize(50, 50)));
 
-    clabel_01 = new ClickableLabel(" ", this, 0, 1);
-    clabel_01 -> setGeometry(QRect(QPoint(76, 26), QSize(48, 48)));
-    clabel_01 -> setAlignment(Qt::AlignCenter);
-    QObject::connect(contr    , SIGNAL(notify(const QString&, int, int))
-                    ,clabel_01, SLOT(setval(const QString&, int, int)));
-    QObject::connect(clabel_01, SIGNAL(clicked(int, int, int))
-                    ,contr    , SLOT(catchclick(int, int, int)));
+    clabel_01 = new ClickableLabel(" ", this, 0, 1, contr);
+    clabel_01 -> setGeometry(QRect(QPoint(75, 25), QSize(50, 50)));
 
-    clabel_02 = new ClickableLabel(" ", this, 0, 2);
-    clabel_02 -> setGeometry(QRect(QPoint(126, 26), QSize(48, 48)));
-    clabel_02 -> setAlignment(Qt::AlignCenter);
-    QObject::connect(contr    , SIGNAL(notify(const QString&, int, int))
-                    ,clabel_02, SLOT(setval(const QString&, int, int)));
-    QObject::connect(clabel_02, SIGNAL(clicked(int, int, int))
-                    ,contr    , SLOT(catchclick(int, int, int)));
+    clabel_02 = new ClickableLabel(" ", this, 0, 2, contr);
+    clabel_02 -> setGeometry(QRect(QPoint(125, 25), QSize(50, 50)));
 
-    clabel_10 = new ClickableLabel(" ", this, 1, 0);
-    clabel_10 -> setGeometry(QRect(QPoint(26, 76), QSize(48, 48)));
-    clabel_10 -> setAlignment(Qt::AlignCenter);
-    QObject::connect(contr    , SIGNAL(notify(const QString&, int, int))
-                    ,clabel_10, SLOT(setval(const QString&, int, int)));
-    QObject::connect(clabel_10, SIGNAL(clicked(int, int, int))
-                    ,contr    , SLOT(catchclick(int, int, int)));
+    clabel_10 = new ClickableLabel(" ", this, 1, 0, contr);
+    clabel_10 -> setGeometry(QRect(QPoint(25, 75), QSize(50, 50)));
 
-    clabel_11 = new ClickableLabel(" ", this, 1, 1);
-    clabel_11 -> setGeometry(QRect(QPoint(76, 76), QSize(48, 48)));
-    clabel_11 -> setAlignment(Qt::AlignCenter);
-    QObject::connect(contr    , SIGNAL(notify(const QString&, int, int))
-                    ,clabel_11, SLOT(setval(const QString&, int, int)));
-    QObject::connect(clabel_11, SIGNAL(clicked(int, int, int))
-                    ,contr    , SLOT(catchclick(int, int, int)));
+    clabel_11 = new ClickableLabel(" ", this, 1, 1, contr);
+    clabel_11 -> setGeometry(QRect(QPoint(75, 75), QSize(50, 50)));
 
-    clabel_12 = new ClickableLabel(" ", this, 1, 2);
-    clabel_12 -> setGeometry(QRect(QPoint(126, 76), QSize(48, 48)));
-    clabel_12 -> setAlignment(Qt::AlignCenter);
-    QObject::connect(contr    , SIGNAL(notify(const QString&, int, int))
-                    ,clabel_12, SLOT(setval(const QString&, int, int)));
-    QObject::connect(clabel_12, SIGNAL(clicked(int, int, int))
-                    ,contr    , SLOT(catchclick(int, int, int)));
+    clabel_12 = new ClickableLabel(" ", this, 1, 2, contr);
+    clabel_12 -> setGeometry(QRect(QPoint(125, 75), QSize(50, 50)));
 
-    clabel_20 = new ClickableLabel(" ", this, 2, 0);
-    clabel_20 -> setGeometry(QRect(QPoint(26, 126), QSize(48, 48)));
-    clabel_20 -> setAlignment(Qt::AlignCenter);
-    QObject::connect(contr    , SIGNAL(notify(const QString&, int, int))
-                    ,clabel_20, SLOT(setval(const QString&, int, int)));
-    QObject::connect(clabel_20, SIGNAL(clicked(int, int, int))
-                    ,contr    , SLOT(catchclick(int, int, int)));
+    clabel_20 = new ClickableLabel(" ", this, 2, 0, contr);
+    clabel_20 -> setGeometry(QRect(QPoint(25, 125), QSize(50, 50)));
 
-    clabel_21 = new ClickableLabel(" ", this, 2, 1);
-    clabel_21 -> setGeometry(QRect(QPoint(76, 126), QSize(48, 48)));
-    clabel_21 -> setAlignment(Qt::AlignCenter);
-    QObject::connect(contr    , SIGNAL(notify(const QString&, int, int))
-                    ,clabel_21, SLOT(setval(const QString&, int, int)));
-    QObject::connect(clabel_21, SIGNAL(clicked(int, int, int))
-                    ,contr    , SLOT(catchclick(int, int, int)));
+    clabel_21 = new ClickableLabel(" ", this, 2, 1, contr);
+    clabel_21 -> setGeometry(QRect(QPoint(75, 125), QSize(50, 50)));
 
-    clabel_22 = new ClickableLabel(" ", this, 2, 2);
-    clabel_22 -> setGeometry(QRect(QPoint(126, 126), QSize(48, 48)));
-    clabel_22 -> setAlignment(Qt::AlignCenter);
-    QObject::connect(contr    , SIGNAL(notify(const QString&, int, int))
-                    ,clabel_22, SLOT(setval(const QString&, int, int)));
-    QObject::connect(clabel_22, SIGNAL(clicked(int, int, int))
-                    ,contr    , SLOT(catchclick(int, int, int)));
+    clabel_22 = new ClickableLabel(" ", this, 2, 2, contr);
+    clabel_22 -> setGeometry(QRect(QPoint(125, 125), QSize(50, 50)));
+
 
 }
 

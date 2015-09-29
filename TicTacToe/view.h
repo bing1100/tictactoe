@@ -3,6 +3,8 @@
 
 #include <string>
 
+// DEPRECATED
+
 class MainWindow;
 
 class View {

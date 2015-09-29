@@ -18,6 +18,8 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+
+    // Constructor/destuctor
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
@@ -28,9 +30,13 @@ public:
     void printstatus(const QString& message);
 
 public slots:
+
+    // Catch when the clearboard button is clicked
     void clearboard();
 
 signals:
+
+    // Signals the controller/game to clear the board
     void clearboard(int type, int h = 4, int w = 4);
 
 private:

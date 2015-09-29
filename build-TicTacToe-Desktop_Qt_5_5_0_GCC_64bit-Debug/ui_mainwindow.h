@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QFrame>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
@@ -27,6 +28,10 @@ class Ui_TicTacToe
 {
 public:
     QWidget *centralWidget;
+    QFrame *line;
+    QFrame *line_2;
+    QFrame *line_3;
+    QFrame *line_4;
     QMenuBar *menuBar;
     QMenu *menuTicTacToe;
     QToolBar *mainToolBar;
@@ -39,6 +44,26 @@ public:
         TicTacToe->resize(400, 300);
         centralWidget = new QWidget(TicTacToe);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
+        line = new QFrame(centralWidget);
+        line->setObjectName(QStringLiteral("line"));
+        line->setGeometry(QRect(25, 25, 150, 2));
+        line->setFrameShape(QFrame::HLine);
+        line->setFrameShadow(QFrame::Sunken);
+        line_2 = new QFrame(centralWidget);
+        line_2->setObjectName(QStringLiteral("line_2"));
+        line_2->setGeometry(QRect(25, 75, 150, 2));
+        line_2->setFrameShape(QFrame::HLine);
+        line_2->setFrameShadow(QFrame::Sunken);
+        line_3 = new QFrame(centralWidget);
+        line_3->setObjectName(QStringLiteral("line_3"));
+        line_3->setGeometry(QRect(25, 125, 150, 2));
+        line_3->setFrameShape(QFrame::HLine);
+        line_3->setFrameShadow(QFrame::Sunken);
+        line_4 = new QFrame(centralWidget);
+        line_4->setObjectName(QStringLiteral("line_4"));
+        line_4->setGeometry(QRect(25, 175, 150, 2));
+        line_4->setFrameShape(QFrame::HLine);
+        line_4->setFrameShadow(QFrame::Sunken);
         TicTacToe->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(TicTacToe);
         menuBar->setObjectName(QStringLiteral("menuBar"));

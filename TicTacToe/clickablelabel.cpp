@@ -1,10 +1,24 @@
 #include "clickablelabel.h"
+#include "controller.h"
+#include <QFont>
 
 // Constructor
-ClickableLabel::ClickableLabel(const QString& text, QWidget* parent, int h, int w)
+ClickableLabel::ClickableLabel(const QString& text, QWidget* parent, int h, int w, Controller * contr)
     : QLabel(parent), h(h), w(w)
 {
+    // Setup formatting for label text
+    QFont font;
+    font.setPointSize(14);
+    font.setBold(true);
+    this->setAlignment(Qt::AlignCenter);
+    this->setFont(font);
     setText(text);
+
+    // Setup the signals with slots
+    QObject::connect(contr    , SIGNAL(notify(const QString&, int, int))
+                    ,this, SLOT(setval(const QString&, int, int)));
+    QObject::connect(this, SIGNAL(clicked(int, int, int))
+                    ,contr    , SLOT(catchclick(int, int, int)));
 }
 
 // Destructor

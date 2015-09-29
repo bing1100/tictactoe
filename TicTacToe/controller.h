@@ -16,11 +16,13 @@ class Controller: public QObject {
     MainWindow * graphicalDisplay;
 
 public slots:
+
     // Main play function
     void catchclick(int type, int h, int w);
 
 signals:
 
+    // Notify signal to the MainWindow
     void notify(const QString& ch, int h, int w);
 
 public:
